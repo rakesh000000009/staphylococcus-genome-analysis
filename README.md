@@ -69,6 +69,7 @@ Edit [`metadata/samples.tsv`](metadata/samples.tsv) to specify your paired-end F
 
 ```tsv
 sample_id	strain	layout	fastq_1	fastq_2
+DRR610201	USA300	paired	data/raw_fastq/DRR610201_1.fastq.gz	data/raw_fastq/DRR610201_2.fastq.gz
 SA_USA300	FPR3757	paired	data/raw_fastq/SA_USA300_R1.fastq.gz	data/raw_fastq/SA_USA300_R2.fastq.gz
 SA_N315	N315	paired	data/raw_fastq/SA_N315_R1.fastq.gz	data/raw_fastq/SA_N315_R2.fastq.gz
 SA_COL	COL	paired	data/raw_fastq/SA_COL_R1.fastq.gz	data/raw_fastq/SA_COL_R2.fastq.gz
@@ -123,6 +124,23 @@ python3 scripts/summarize_metrics.py
 | `results/annotations/{sample}_prokka/{sample}.ffn` | Nucleotide sequences of all predicted coding genes |
 | `results/mlst_report.tsv` | MLST sequence types (ST) and 7-gene allele calls |
 | `results/assembly_summary.tsv` | Consolidated summary across all sequenced isolates |
+
+---
+
+## Validated Benchmark Dataset (`DRR610201`)
+
+The repository includes pre-computed benchmark results for *S. aureus* isolate **`DRR610201`** (from Galaxy Australia history [bacterial-wgs](https://usegalaxy.org.au/u/rakeshsahoo/h/bacterial-wgs)):
+
+| Metric | Measured Value | Standard / Expectation | Status |
+| :--- | :--- | :--- | :--- |
+| **Taxonomic Identification** | 89.30% *S. aureus* (Kraken2) | > 80% species purity | Pass |
+| **Sequence Type (MLST)** | **ST8** (`3-3-1-1-4-4-3`) | USA300 CA-MRSA lineage | Concordant |
+| **Total Assembly Length** | **3,063,262 bp** (~3.06 Mb) | 2.70 – 3.10 Mb | Pass |
+| **Contig Count** | 895 contigs | Short-read isolate | Pass |
+| **N50 Contig Size** | **75,439 bp** (Scaffold N50: 106 kb) | > 50,000 bp | Pass |
+| **GC Content** | **33.23%** | 32.5% – 33.5% | Pass |
+| **BUSCO Completeness** | **98.9%** (1,303 / 1,317 orthologs) | ≥ 98.0% (`staphylococcus_odb12`) | Pass |
+| **Annotated CDS** | **2,686 CDS**, 62 tRNAs, 5 rRNAs | 2,500 – 2,800 CDS | Pass |
 
 ---
 

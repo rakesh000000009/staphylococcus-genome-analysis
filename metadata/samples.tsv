@@ -1,4 +1,5 @@
 sample_id	strain	layout	fastq_1	fastq_2
+DRR610201	USA300	paired	data/raw_fastq/DRR610201_1.fastq.gz	data/raw_fastq/DRR610201_2.fastq.gz
 SA_USA300	FPR3757	paired	data/raw_fastq/SA_USA300_R1.fastq.gz	data/raw_fastq/SA_USA300_R2.fastq.gz
 SA_N315	N315	paired	data/raw_fastq/SA_N315_R1.fastq.gz	data/raw_fastq/SA_N315_R2.fastq.gz
 SA_COL	COL	paired	data/raw_fastq/SA_COL_R1.fastq.gz	data/raw_fastq/SA_COL_R2.fastq.gz

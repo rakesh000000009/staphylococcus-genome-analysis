@@ -1,0 +1,8 @@
+organism: Staphylococcus aureus strain USA300
+contigs: 855
+bases: 3057947
+CDS: 2686
+rRNA: 5
+repeat_region: 1
+tRNA: 62
+tmRNA: 1

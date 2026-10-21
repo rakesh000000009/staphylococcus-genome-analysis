@@ -26,6 +26,7 @@
 *.fai
 *.tab
 *.tabular
+*.tbl
 
 # SPAdes intermediate files and correction folders
 *_spades/
