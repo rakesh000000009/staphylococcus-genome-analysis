@@ -1,8 +1,25 @@
 #!/usr/bin/env bash
+# Drafted with AI assistance; not used to generate the results in results/ unless stated in README.
 # ==============================================================================
 # Script: run_assembly.sh
 # Purpose: De novo bacterial genome assembly with SPAdes (--isolate mode)
-# Usage: ./scripts/run_assembly.sh [sample_sheet] [threads] [memory_gb]
+#
+# Usage and requirements:
+#   Requirements:
+#     - spades.py (SPAdes v3.15+ recommended, available via Bioconda)
+#     - quast.py or quast (optional, for post-assembly continuity evaluation)
+#     - bash shell environment
+#   Usage:
+#     ./scripts/run_assembly.sh [sample_sheet] [threads] [memory_gb]
+#   Arguments:
+#     sample_sheet : Path to tab-delimited sample sheet (default: metadata/samples.tsv)
+#     threads      : Number of parallel CPU threads (default: 8)
+#     memory_gb    : Maximum RAM in GB allocated to SPAdes (default: 16)
+#   Inputs:
+#     Cleaned/trimmed FASTQ files in results/qc/ (falls back to raw FASTQs)
+#   Outputs:
+#     Contigs (*_contigs.fasta), scaffolds (*_scaffolds.fasta), and
+#     QUAST reports (*_quast/) in results/assemblies/
 # ==============================================================================
 
 set -euo pipefail

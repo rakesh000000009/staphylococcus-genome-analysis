@@ -1,8 +1,24 @@
 #!/usr/bin/env bash
+# Drafted with AI assistance; not used to generate the results in results/ unless stated in README.
 # ==============================================================================
 # Script: run_annotation.sh
 # Purpose: Annotate Staphylococcus genomes with Prokka and perform MLST typing
-# Usage: ./scripts/run_annotation.sh [sample_sheet] [threads]
+#
+# Usage and requirements:
+#   Requirements:
+#     - prokka (v1.14+ recommended, available via Bioconda)
+#     - mlst (Torsten Seemann MLST tool, available via Bioconda)
+#     - bash shell environment
+#   Usage:
+#     ./scripts/run_annotation.sh [sample_sheet] [threads]
+#   Arguments:
+#     sample_sheet : Path to tab-delimited sample sheet (default: metadata/samples.tsv)
+#     threads      : Number of parallel CPU threads (default: 4)
+#   Inputs:
+#     Assembled contigs in results/assemblies/{sample_id}_contigs.fasta
+#   Outputs:
+#     Prokka annotation files (GFF, GBK, FAA, FFN, TXT) in results/annotations/
+#     and MLST sequence typing calls in results/mlst_report.tsv
 # ==============================================================================
 
 set -euo pipefail

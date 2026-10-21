@@ -1,12 +1,66 @@
-# Staphylococcus Genome Analysis Pipeline
+# Staphylococcus Genome Analysis
 
-[![Bioinformatics - WGS](https://img.shields.io/badge/Bioinformatics-WGS%20Assembly%20%26%20Annotation-blue.svg)](#)
+[![Bioinformatics - WGS](https://img.shields.io/badge/Bioinformatics-Galaxy%20WGS%20Analysis-blue.svg)](#)
 [![Target Organism](https://img.shields.io/badge/Organism-Staphylococcus%20aureus-green.svg)](#)
+[![Course](https://img.shields.io/badge/Course-AuroSeqTech%20Certificate-orange.svg)](#)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-An end-to-end, production-grade bioinformatics pipeline tailored for Whole-Genome Sequencing (WGS) analysis of *Staphylococcus* species (including Methicillin-resistant *Staphylococcus aureus* / MRSA). 
+A Galaxy-based *de novo* whole-genome sequencing (WGS) analysis of a single *Staphylococcus aureus* isolate (`DRR610201`), completed as a learning project during the 3-day certificate course **"Whole De Novo Genome Analysis of Bacteria Using Galaxy Platform"**, conducted by AuroSeqTech, India (21–23 April 2026).
 
-The workflow performs automated paired-end quality control and trimming (`fastp`), *de novo* genome assembly (`SPAdes --isolate`), quality and completeness evaluation (`QUAST` & `BUSCO`), standardized genomic feature annotation (`Prokka`), and molecular epidemiological sequence typing (`mlst`), consolidating all metrics into a unified summary table.
+The analysis was performed interactively on [Galaxy Australia](https://usegalaxy.org.au). The complete published history is accessible here:  
+🔗 **Published Galaxy History:** [bacterial-wgs (usegalaxy.org.au)](https://usegalaxy.org.au/u/rakeshsahoo/h/bacterial-wgs)
+
+---
+
+## My Contribution
+
+* **Galaxy Analysis Execution:** Ran the Galaxy workflow tools interactively on Galaxy Australia, tracking intermediate data states and outputs for isolate `DRR610201`.
+* **Output Interpretation:** Evaluated and interpreted assembly continuity statistics, biological gene completeness metrics (BUSCO), taxonomic classification, and functional annotation counts.
+* **Documentation and Scripting:** Used an AI coding assistant (Antigravity) to draft the repository documentation and command-line helper scripts in `scripts/`.
+* **Verification:** Performed local syntax and execution checks on all drafted scripts.
+
+---
+
+## Galaxy Analysis Workflow & Tools
+
+The core analysis tools executed in Galaxy for this project comprise:
+
+| Tool | Role in Galaxy Analysis |
+| :--- | :--- |
+| **SPAdes** | *De novo* assembly of paired-end Illumina short reads (`DRR610201`) into contigs and scaffolds. |
+| **Bowtie2** | Alignment and mapping of paired-end reads back to contigs to assess read mapping consistency and depth. |
+| **BUSCO** | Quantitative evaluation of biological completeness against the `staphylococcus_odb12` lineage dataset. |
+| **Proksee** | Circular genome visualization, contig arrangement, and genomic feature mapping. |
+| **TYGS** | Type (Strain) Genome Server analysis for digital DNA-DNA hybridization (dDDH) and phylogenomic species confirmation against type strains. |
+
+*(Note: The published Galaxy history also includes datasets from FastQC, fastp, Kraken2, QUAST, Prokka, and MLST, which generated the preliminary metrics reported in `results/`.)*
+
+---
+
+## Summary Results for Isolate DRR610201
+
+The table below summarizes measured assembly and annotation metrics for *Staphylococcus aureus* isolate **`DRR610201`** (NCBI SRA accession: `DRR610201`, paired-end Illumina dataset):
+
+| Metric | Tool | Measured Value | Interpretation |
+| :--- | :--- | :--- | :--- |
+| **Taxonomic Identification** | Kraken2 | 89.30% *S. aureus* (Kraken2) | High proportion of reads assigned to *S. aureus*, supporting isolate identity; remainder represents minor unclassified or background taxa. |
+| **Sequence Type (MLST)** | mlst | **ST8** (`3-3-1-1-4-4-3`) | 7-gene housekeeping allelic profile corresponds unambiguously to Sequence Type 8 (associated with the USA300 CA-MRSA lineage). |
+| **Total Assembly Length** | SPAdes / QUAST | **3,063,262 bp** (~3.06 Mb) | Total assembly size is slightly higher than typical *S. aureus* genomes (~2.75–2.95 Mb); indicates possible small contig artifacts or minor contamination requiring screening. |
+| **Contig Count** | SPAdes / QUAST | 895 contigs | Indicates a fragmented draft assembly with many short contigs, characteristic of short-read *de novo* assembly without long-read scaffolding. |
+| **N50 Contig Size** | SPAdes / QUAST | **75,439 bp** (Scaffold N50: 106 kb) | Half of the assembled genome length is contained within contigs of 75,439 bp or larger (scaffolds ≥ 106 kb), showing reasonable contiguity for major chromosomal segments despite fragmentation. |
+| **GC Content** | SPAdes / QUAST | **33.23%** | Consistent with the low-GC character of *Staphylococcus* genomes (general reference range ~32.7%–33.0%; QUAST reported 32.75% for contigs ≥ 500 bp). |
+| **BUSCO Completeness** | BUSCO | **98.9%** (1,303 / 1,317 orthologs) | High biological completeness against `staphylococcus_odb12` (1,300 single-copy, 3 duplicated, 2 fragmented, 12 missing), showing core conserved genes are largely captured. |
+| **Annotated Features** | Prokka | **2,686 CDS**, 62 tRNAs, 5 rRNAs | Total predicted coding sequences and RNA features align with expected gene counts for *S. aureus* (~2,500–2,800 CDS). |
+
+---
+
+## Limitations
+
+* **Single Isolate:** The analysis examines only a single isolate dataset (`DRR610201`). Findings cannot be generalized to broader *Staphylococcus* populations without comparative multi-isolate cohorts.
+* **Fragmented Draft Assembly:** With 895 contigs, the assembly remains fragmented. Repetitive regions (such as ribosomal RNA operons, insertion sequences, and prophages) cannot be fully resolved using short reads alone.
+* **No Experimental Replicates or Reference-Guided Closure:** The dataset lacks biological/technical replicates. Long-read sequencing (e.g., Oxford Nanopore or PacBio) was not available to scaffold contigs into a finished, circular chromosome.
+* **Elevated Assembly Length:** At ~3.06 Mb, the assembled length is slightly above the typical ~2.75–2.95 Mb range for *S. aureus*, suggesting the presence of small fragmented contigs, repetitive expansions, or minor assembly artifacts.
+* **Galaxy Execution vs. Command-Line Scripts:** The primary results were generated through the Galaxy web interface; the scripts in `scripts/` are AI-assisted command-line drafts created for educational and reproducibility purposes, rather than the original execution environment.
 
 ---
 
@@ -14,44 +68,45 @@ The workflow performs automated paired-end quality control and trimming (`fastp`
 
 ```
 staphylococcus-genome-analysis/
-├── README.md                  # Project overview and run guide
-├── .gitignore                 # Exclusion rules for large genomic files & logs
+├── README.md                  # Project overview, results, and limitations
+├── LICENSE                    # MIT License (Rakesh Sahoo, 2026)
+├── SUGGESTED_GITHUB_SETTINGS.md # Recommended GitHub repository description and topics
+├── .gitignore                 # Exclusion rules for large genomic files, reads & logs
 ├── metadata/
-│   └── samples.tsv            # Tab-delimited sample sheet (sample_id, strain, fastq paths)
+│   └── samples.tsv            # Tab-delimited sample sheet (DRR610201)
 ├── scripts/
-│   ├── run_qc.sh              # Read trimming & quality control with fastp
-│   ├── run_assembly.sh        # De novo genome assembly with SPAdes
-│   ├── run_annotation.sh      # Genome annotation with Prokka & MLST typing
-│   └── summarize_metrics.py   # Python script consolidating QUAST, BUSCO & Prokka stats
+│   ├── run_qc.sh              # Read trimming with fastp (CLI draft)
+│   ├── run_assembly.sh        # De novo genome assembly with SPAdes (CLI draft)
+│   ├── run_annotation.sh      # Genome annotation with Prokka & MLST (CLI draft)
+│   └── summarize_metrics.py   # Metric aggregator script (CLI draft)
 ├── results/
-│   ├── qc/                    # Cleaned FASTQ files and fastp HTML/JSON reports
-│   ├── assemblies/            # SPAdes contigs, scaffolds, and QUAST reports
-│   ├── annotations/           # Prokka GFF3, GBK, FFN, FAA, and TXT files
+│   ├── qc/                    # Kraken2 taxonomic report for DRR610201
+│   ├── assemblies/            # BUSCO completeness report for DRR610201
+│   ├── annotations/           # Prokka summary report for DRR610201
 │   ├── mlst_report.tsv        # Multi-Locus Sequence Typing report
-│   └── assembly_summary.tsv   # Consolidated multi-sample quality summary table
+│   └── assembly_summary.tsv   # Consolidated metrics table
 └── docs/
-    └── workflow_methods.md    # Detailed scientific rationale and QC thresholds
+    └── workflow_methods.md    # Detailed methodology and reference ranges
 ```
 
 ---
 
-## Tool Prerequisites
+## Optional Command-Line Scripts (AI-Assisted Draft, Run Locally [date: [will update soon]])
 
-Ensure the following bioinformatics tools and libraries are installed. The recommended environment can be set up via **Conda** / **Mamba** from Bioconda and conda-forge:
+The scripts in `scripts/` provide an alternative command-line implementation of read QC, assembly, annotation, and metric aggregation. They were drafted with AI assistance (Antigravity) and tested locally.
 
-| Tool | Version | Purpose |
-| :--- | :--- | :--- |
-| **fastp** | `≥ 0.23` | Ultra-fast adapter trimming, poly-G removal, and quality filtering |
-| **SPAdes** | `≥ 3.15` | De novo isolate bacterial genome assembler |
-| **QUAST** | `≥ 5.2` | Assembly continuity evaluation (N50, L50, length, GC%) |
-| **BUSCO** | `≥ 5.4` | Genome completeness using `staphylococcus_odb10` / `odb12` |
-| **Prokka** | `≥ 1.14` | Rapid prokaryotic genome feature annotation |
-| **mlst** | `≥ 2.23` | Multi-Locus Sequence Typing from contigs (PubMLST) |
-| **Python** | `≥ 3.8` | Metric aggregation with `pandas` |
+### Sample Metadata
+The sample sheet [`metadata/samples.tsv`](metadata/samples.tsv) lists the active dataset:
 
-### Setting Up the Conda Environment
+```tsv
+sample_id	strain	layout	fastq_1	fastq_2
+DRR610201	USA300	paired	data/raw_fastq/DRR610201_1.fastq.gz	data/raw_fastq/DRR610201_2.fastq.gz
+```
 
-You can install all dependencies into a dedicated conda environment:
+> **Note on Planned Samples:** Additional reference strains (`SA_USA300`, `SA_N315`, `SA_COL`) were initially considered for comparative benchmarking, but were not processed during the certificate course. They may be included in future comparative analyses.
+
+### Conda Environment Setup (Optional)
+To test or execute the command-line scripts locally:
 
 ```bash
 conda create -n staph-wgs -c conda-forge -c bioconda \
@@ -60,91 +115,28 @@ conda create -n staph-wgs -c conda-forge -c bioconda \
 conda activate staph-wgs
 ```
 
----
+### Script Execution Overview
 
-## Quickstart & Execution Guide
-
-### 1. Configure Sample Metadata
-Edit [`metadata/samples.tsv`](metadata/samples.tsv) to specify your paired-end FASTQ file locations:
-
-```tsv
-sample_id	strain	layout	fastq_1	fastq_2
-DRR610201	USA300	paired	data/raw_fastq/DRR610201_1.fastq.gz	data/raw_fastq/DRR610201_2.fastq.gz
-SA_USA300	FPR3757	paired	data/raw_fastq/SA_USA300_R1.fastq.gz	data/raw_fastq/SA_USA300_R2.fastq.gz
-SA_N315	N315	paired	data/raw_fastq/SA_N315_R1.fastq.gz	data/raw_fastq/SA_N315_R2.fastq.gz
-SA_COL	COL	paired	data/raw_fastq/SA_COL_R1.fastq.gz	data/raw_fastq/SA_COL_R2.fastq.gz
-```
-
-### 2. Quality Control & Adapter Trimming
-Run `fastp` to filter low-quality bases (Q < 20), remove poly-G tails, and clip adapter sequences:
-
-```bash
-./scripts/run_qc.sh metadata/samples.tsv 8
-```
-*Outputs: Cleaned FASTQs and HTML reports in `results/qc/`.*
-
-### 3. De Novo Genome Assembly
-Execute SPAdes in isolate mode to construct contigs and scaffolds:
-
-```bash
-./scripts/run_assembly.sh metadata/samples.tsv 8 16
-```
-*(Arguments: sample sheet, threads [8], memory in GB [16])*  
-*Outputs: Contigs (`*_contigs.fasta`), scaffolds, and QUAST reports in `results/assemblies/`.*
-
-### 4. Genome Annotation & MLST Typing
-Annotate assemblies with Prokka (genus *Staphylococcus*) and call sequence types:
-
-```bash
-./scripts/run_annotation.sh metadata/samples.tsv 8
-```
-*Outputs: GFF3/GBK/FFN/FAA files in `results/annotations/` and `results/mlst_report.tsv`.*
-
-### 5. Consolidate Metrics & Summary Report
-Extract continuity, completeness (BUSCO), annotation counts, and STs into a single table:
-
-```bash
-python3 scripts/summarize_metrics.py
-```
-*Outputs: [`results/assembly_summary.tsv`](results/assembly_summary.tsv).*
-
----
-
-## Expected Output Files
-
-| Output Path | Description |
-| :--- | :--- |
-| `results/qc/{sample}_fastp.html` | Interactive QC report before and after trimming |
-| `results/qc/{sample}_R1.trimmed.fastq.gz` | High-quality paired-end sequencing reads |
-| `results/assemblies/{sample}_contigs.fasta` | Assembled genomic contigs |
-| `results/assemblies/{sample}_quast/report.tsv` | Detailed QUAST assembly continuity statistics |
-| `results/annotations/{sample}_prokka/{sample}.gff` | Standard GFF3 functional annotation |
-| `results/annotations/{sample}_prokka/{sample}.gbk` | GenBank file for visualization in Artemis / IGV |
-| `results/annotations/{sample}_prokka/{sample}.faa` | Translated protein sequences |
-| `results/annotations/{sample}_prokka/{sample}.ffn` | Nucleotide sequences of all predicted coding genes |
-| `results/mlst_report.tsv` | MLST sequence types (ST) and 7-gene allele calls |
-| `results/assembly_summary.tsv` | Consolidated summary across all sequenced isolates |
-
----
-
-## Validated Benchmark Dataset (`DRR610201`)
-
-The repository includes pre-computed benchmark results for *S. aureus* isolate **`DRR610201`** (from Galaxy Australia history [bacterial-wgs](https://usegalaxy.org.au/u/rakeshsahoo/h/bacterial-wgs)):
-
-| Metric | Measured Value | Standard / Expectation | Status |
-| :--- | :--- | :--- | :--- |
-| **Taxonomic Identification** | 89.30% *S. aureus* (Kraken2) | > 80% species purity | Pass |
-| **Sequence Type (MLST)** | **ST8** (`3-3-1-1-4-4-3`) | USA300 CA-MRSA lineage | Concordant |
-| **Total Assembly Length** | **3,063,262 bp** (~3.06 Mb) | 2.70 – 3.10 Mb | Pass |
-| **Contig Count** | 895 contigs | Short-read isolate | Pass |
-| **N50 Contig Size** | **75,439 bp** (Scaffold N50: 106 kb) | > 50,000 bp | Pass |
-| **GC Content** | **33.23%** | 32.5% – 33.5% | Pass |
-| **BUSCO Completeness** | **98.9%** (1,303 / 1,317 orthologs) | ≥ 98.0% (`staphylococcus_odb12`) | Pass |
-| **Annotated CDS** | **2,686 CDS**, 62 tRNAs, 5 rRNAs | 2,500 – 2,800 CDS | Pass |
+1. **Quality Control & Read Trimming:**
+   ```bash
+   ./scripts/run_qc.sh metadata/samples.tsv 4
+   ```
+2. **De Novo Assembly & Continuity Check:**
+   ```bash
+   ./scripts/run_assembly.sh metadata/samples.tsv 8 16
+   ```
+3. **Genome Annotation & MLST Typing:**
+   ```bash
+   ./scripts/run_annotation.sh metadata/samples.tsv 4
+   ```
+4. **Aggregate Summary Metrics:**
+   ```bash
+   python3 scripts/summarize_metrics.py
+   ```
 
 ---
 
 ## Documentation & Methodology
 
-For detailed scientific descriptions of algorithms, parameter selection, and quality thresholds (e.g. expected *S. aureus* genome size ~2.8 Mb, GC content ~32.8%, and BUSCO benchmarks), refer to:
-📖 [Workflow Methodology & Quality Standards](docs/workflow_methods.md)
+For detailed scientific descriptions of algorithms, Galaxy tools, and general reference ranges, refer to:  
+📖 [Scientific Methodology & Workflow Documentation](docs/workflow_methods.md)

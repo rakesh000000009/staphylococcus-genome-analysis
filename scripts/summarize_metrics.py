@@ -1,13 +1,29 @@
 #!/usr/bin/env python3
+# Drafted with AI assistance; not used to generate the results in results/ unless stated in README.
 """
 Summarize Assembly Continuity and Completeness Metrics
 ======================================================
+Usage and requirements:
+  Requirements:
+    - Python 3.8+
+    - pandas (pip install pandas or conda install pandas)
+  Usage:
+    python3 scripts/summarize_metrics.py [options]
+  Options:
+    --metadata PATH         Path to sample sheet (default: metadata/samples.tsv)
+    --assemblies-dir PATH   Path to assembly directory (default: results/assemblies)
+    --annotations-dir PATH  Path to annotations directory (default: results/annotations)
+    --mlst-report PATH      Path to MLST report (default: results/mlst_report.tsv)
+    --output PATH           Destination summary TSV (default: results/assembly_summary.tsv)
+  Inputs:
+    Assembly contigs, QUAST report directories, BUSCO short summaries,
+    Prokka summary .txt files, and MLST tabular reports.
+  Outputs:
+    Consolidated summary table written to results/assembly_summary.tsv
+
 This script parses assembly quality metrics (QUAST), gene completeness (BUSCO),
 functional annotation counts (Prokka), and sequence types (MLST) across samples,
 producing a consolidated tabular summary.
-
-Outputs:
-    results/assembly_summary.tsv
 """
 
 import os

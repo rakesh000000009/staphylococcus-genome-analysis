@@ -1,8 +1,23 @@
 #!/usr/bin/env bash
+# Drafted with AI assistance; not used to generate the results in results/ unless stated in README.
 # ==============================================================================
 # Script: run_qc.sh
 # Purpose: Read quality control, adapter trimming, and poly-G filtering with fastp
-# Usage: ./scripts/run_qc.sh [sample_sheet] [threads]
+#
+# Usage and requirements:
+#   Requirements:
+#     - fastp (v0.23+ recommended, available via Bioconda)
+#     - bash shell environment
+#   Usage:
+#     ./scripts/run_qc.sh [sample_sheet] [threads]
+#   Arguments:
+#     sample_sheet : Path to tab-delimited sample sheet (default: metadata/samples.tsv)
+#     threads      : Number of parallel processing threads (default: 4)
+#   Inputs:
+#     Paired-end FASTQ files referenced in the sample sheet
+#   Outputs:
+#     Trimmed FASTQs (*_R1.trimmed.fastq.gz, *_R2.trimmed.fastq.gz) and
+#     fastp HTML/JSON quality reports in results/qc/
 # ==============================================================================
 
 set -euo pipefail
