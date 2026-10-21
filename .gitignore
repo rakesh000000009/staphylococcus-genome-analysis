@@ -1,0 +1,87 @@
+# ==============================================================================
+# Staphylococcus Genome Analysis Pipeline - Git Ignore
+# ==============================================================================
+
+# Raw and processed sequencing reads
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+*.bam
+*.sam
+*.cram
+*.bai
+*.csi
+
+# Genomic assemblies, contigs, and annotations (large binaries/text)
+*.fasta
+*.fa
+*.fna
+*.gff
+*.gff3
+*.gbk
+*.gb
+*.faa
+*.ffn
+*.fai
+*.tab
+*.tabular
+
+# SPAdes intermediate files and correction folders
+*_spades/
+K[0-9]*/
+corrected/
+mismatch_corrector/
+configs/
+spades.log
+params.txt
+
+# QUAST and BUSCO scratch directories
+quast_downloaded_references/
+busco_downloads/
+
+# Python cache and environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and system files
+*.log
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Keep directory structure in results/
+!results/**/.gitkeep
+!results/assembly_summary.tsv
+!results/mlst_report.tsv
+!metadata/*.tsv

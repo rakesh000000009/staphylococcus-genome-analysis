@@ -1,0 +1,4 @@
+Sample_ID	Strain	Sequence_Type (ST)	Contigs_Count	Total_Length_bp	N50_bp	L50	GC_Percent	BUSCO_Complete_%	BUSCO_Single_%	BUSCO_Duplicated_%	BUSCO_Fragmented_%	BUSCO_Missing_%	Prokka_CDS	Prokka_tRNA	Prokka_rRNA
+SA_USA300	FPR3757	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+SA_N315	N315	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
+SA_COL	COL	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA	NA
